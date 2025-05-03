@@ -11,8 +11,7 @@ def process_response(response):
         print(f"Status: {code}, Body: {response.text}")
     elif 400 <= code < 600:
         raise HTTPStatusException(
-            f"Error status: {code}, Body: {
-                response.text}")
+            f"Error status: {code}, Body: {response.text}")
 
 
 def main():
