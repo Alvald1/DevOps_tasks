@@ -1,4 +1,4 @@
-# Yadro DevOps Task 2
+# DevOps Task 2
 
 ## Описание
 
