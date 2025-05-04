@@ -1,0 +1,29 @@
+- name: Check Docker installation
+  command: docker -v
+  register: docker_version
+  changed_when: false
+  failed_when: docker_version.rc != 0
+
+- name: Show Docker version
+  debug:
+    var: docker_version.stdout
+
+- name: Run py_request container and wait for completion
+  community.docker.docker_container:
+    name: "py_request"
+    image: "{{ image_name }}"
+    pull: true
+    state: started
+    recreate: true
+    detach: false
+  register: py_request_result
+
+- name: Check py_request container exit code
+  fail:
+    msg: "Container exited with code {{ py_request_result.container.State.ExitCode }}"
+  when: py_request_result.container.State.ExitCode != 0
+
+- name: Print py_request container output
+  debug:
+    msg: "{{ py_request_result.container.Output.splitlines() }}"
+
